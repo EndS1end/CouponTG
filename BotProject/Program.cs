@@ -15,11 +15,14 @@ namespace CouponsGetBot
         public static DataAccessor DataAccessor;
         static async Task Main()
         {
-            string botToken = "6706177093:AAEwQQfr_pqmtnukAog6bTqom1hbHDRdLts";
+            string botToken = Environment.GetEnvironmentVariable("TOKEN");
+            //string botToken = "6706177093:AAEwQQfr_pqmtnukAog6bTqom1hbHDRdLts";
             TelegramBotClient client = new TelegramBotClient(botToken);
 
             BotDBContext = new BotDBContext();
             DataAccessor = new DataAccessor(BotDBContext);
+
+            DataAccessor.EnsureDatabaseCreated();
             DataAccessor.InitFacilities();
             
             foreach(var Facility in DataAccessor.GetAllFacilities())
@@ -35,7 +38,7 @@ namespace CouponsGetBot
 
             Console.WriteLine("Бот запущен!");
 
-            Console.ReadKey();
+            Thread.Sleep(Timeout.Infinite);
         }
 
         async static Task Update(ITelegramBotClient botClient, Update update, CancellationToken token)

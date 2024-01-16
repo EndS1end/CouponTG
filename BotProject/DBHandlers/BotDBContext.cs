@@ -18,6 +18,8 @@ namespace CouponsGetBot.DBHandlers
         {
             optionsBuilder.UseNpgsql(Constants.ConnectionString);
         }
+
+
     }
 
 }
